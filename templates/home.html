@@ -1,38 +1,67 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Homepage</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/Home.css">
+    <title>Mon Portfolio</title>
 </head>
 <body>
-    <div class="Background">
-        <div class="navbar">
+    <header>
+        <nav>
             <ul>
-                <li><a href="home.html">Home Page</a></li>
-                <li><a href="AboutUs.html">About Me</a></li>
-                <li>My Projects</li>
-                <li><a href="contacts.html">Contacts</a></li>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/Project">Projets</a></li>
+                <li><a href="/AboutUs">À propos</a></li>
+                <li><a href="/Contact">Contact</a></li>
+                <li><a href="#Connexion">connexion</a></li>
             </ul>
-        </div>
-        <div class="contents">
-            <div class="left-column">
-                <h1 class="animated-text">Welcome To My Portfolio!</h1>
+        </nav>
+    </header>
+
+    <section id="home" class="section">
+        <h1>Bienvenue sur mon portfolio</h1>
+        <p>Développeur Web passionné, prêt à transformer vos idées en réalité numérique.</p>
+        <button onclick="scrollToSection('projects')">Voir mes projets</button>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Mes Projets</h2>
+        <div class="project-container">
+            <div class="project-card">
+                <h3>Projet 1</h3>
+                <p>Description du projet 1.</p>
             </div>
-            <div class="menu-items">
-                <p>Musique</p>
-                <p>Dev Web</p>
-                <p>CreaDesign</p>
-            </div>  
-            <div class="image-container">
-                <a href="musique.html"><img src="https://img.freepik.com/premium-photo/fashionable-headphones-with-neon-light_175682-14405.jpg" class="logo"></a>
-                <img src="https://www.tice-education.fr/images/stories/img/florian-olivo-4hbJ-eymZ1o-unsplash.jpg" class="logo">
-                <img src="https://img.freepik.com/photos-gratuite/concepts-conception-web-arriere-plan-flou_1134-82.jpg" class="logo"> 
-            </div> 
+            <div class="project-card">
+                <h3>Projet 2</h3>
+                <p>Description du projet 2.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projet 3</h3>
+                <p>Description du projet 3.</p>
+            </div>
         </div>
-    </div>
-    <div class="next-page">
-        <a href="AboutUs.html" class="next-button">Next Page</a>
-    </div>  
-    <script src="js/script.js"></script>
+    </section>
+
+    <section id="about" class="section">
+        <h2>À propos de moi</h2>
+        <p>Je suis un développeur passionné par le développement web et l'intelligence artificielle. Je suis toujours curieux d'apprendre de nouvelles technologies et de relever de nouveaux défis.</p>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contactez-moi</h2>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Votre nom" required>
+            <input type="email" id="email" placeholder="Votre email" required>
+            <textarea id="message" placeholder="Votre message" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Mon Portfolio</p>
+    </footer>
+
+    <script src="assets/js/Home.js"></script>
 </body>
 </html>
