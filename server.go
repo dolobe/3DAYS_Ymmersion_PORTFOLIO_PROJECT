@@ -6,6 +6,8 @@ import (
 	"ymmersion_portfolio_project/src/handlers"
 )
 
+const port = ":8088"
+
 func main() {
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
