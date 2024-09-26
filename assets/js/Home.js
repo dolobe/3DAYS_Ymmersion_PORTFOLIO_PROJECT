@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function addProjectToList(project) {
-        const projectList = document.getElementById("projects"); // Changer ici pour correspondre à la section de projets
+        const projectList = document.getElementById("projects");
         const projectItem = document.createElement("div");
         projectItem.className = "project-item card";
 
