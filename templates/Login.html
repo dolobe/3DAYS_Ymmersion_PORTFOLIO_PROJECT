@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/Login.css">
+    <link rel="stylesheet" href="assets/css/Home.css">
+    <title>Connexion</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/Project">Projets</a></li>
+                <li><a href="/AboutUs">À propos</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/Login">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="login" class="section">
+        <h2>Connexion à votre compte</h2>
+        <form method="post" action="/Connexion">
+            <input type="text" name="mail" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form>
+        <div id="message" class="message"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Mon Portfolio</p>
+    </footer>
+
+    <script src="assets/js/Login.js"></script>
+</body>
+</html>
