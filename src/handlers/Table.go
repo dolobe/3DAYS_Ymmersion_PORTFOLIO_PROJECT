@@ -2,19 +2,10 @@ package handlers
 
 import (
 	"database/sql"
-	"encoding/json"
 	"log"
-	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-type Project struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Image       string `json:"image"`
-	Link        string `json:"link"`
-}
 
 var db *sql.DB
 
@@ -30,29 +21,6 @@ func Path() (*sql.DB, error) {
 
 	db = database
 	return db, nil
-}
-
-func HandleAddProject(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		var project Project
-		err := json.NewDecoder(r.Body).Decode(&project)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		_, err = db.Exec("INSERT INTO projects (title, description, image, link) VALUES (?, ?, ?, ?)",
-			project.Title, project.Description, project.Image, project.Link)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(project)
-	} else {
-		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
-	}
 }
 
 func createTables(db *sql.DB) error {
@@ -72,9 +40,9 @@ func createTables(db *sql.DB) error {
     CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        image TEXT NOT NULL,
-        link TEXT NOT NULL
+        description TEXT,
+        image TEXT,
+        link TEXT
     );`
 
 	if _, err := db.Exec(queryProjects); err != nil {
