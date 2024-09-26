@@ -50,5 +50,19 @@ func createTables(db *sql.DB) error {
 		return err
 	}
 
+	createTableSQL := `
+	CREATE TABLE IF NOT EXISTS messages (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL,
+		email TEXT NOT NULL,
+		subject TEXT NOT NULL,
+		message TEXT NOT NULL
+    );`
+
+	if _, err := db.Exec(createTableSQL); err != nil {
+		log.Println("Erreur lors de la création de la table messages:", err)
+		return err
+	}
+
 	return nil
 }
