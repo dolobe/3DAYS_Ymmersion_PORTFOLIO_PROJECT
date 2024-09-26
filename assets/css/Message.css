@@ -1,0 +1,5 @@
+.section ul li {
+    border: 3px black solid;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

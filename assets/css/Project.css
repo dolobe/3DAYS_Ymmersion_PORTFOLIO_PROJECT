@@ -1,9 +1,10 @@
-/* Style pour la page des projets */
+
 .project-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    border: 5px red solid;
 }
 
 .project-card {
@@ -50,3 +51,5 @@ button {
 button:hover {
     background-color: #2980b9;
 }
+
+
