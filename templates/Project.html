@@ -12,7 +12,7 @@
         <nav>
             <ul>
                 <li><a href="/">Accueil</a></li>
-                <li><a href=":Project">Projets</a></li>
+                <li><a href="/Project">Projets</a></li>
                 <li><a href="/AboutUs">À propos</a></li>
                 <li><a href="/Contact">Contact</a></li>
                 <li><a href="/Login">Connexion</a></li>
@@ -23,27 +23,18 @@
     <section id="projects" class="section">
         <h2>Mes Projets</h2>
         <div class="project-container" id="project-list">
-            <!-- Exemples de projets -->
-            <div class="project-card">
-                <img src="assets/images/projet1.jpg" alt="Projet 1">
-                <h3>Application de Gestion des Tâches</h3>
-                <p>Une application web permettant aux utilisateurs de créer, suivre et gérer leurs tâches quotidiennes. L'application inclut des fonctionnalités telles que l'ajout de tâches, des rappels et la possibilité de marquer les tâches comme terminées.</p>
-                <a href="https://github.com/votreprofil/todolist" target="_blank"><button>Voir le projet</button></a>
-            </div>
-            
-            <div class="project-card">
-                <img src="assets/images/projet2.jpg" alt="Projet 2">
-                <h3>Site E-commerce</h3>
-                <p>Un site de vente en ligne développé avec React et Node.js, offrant des fonctionnalités complètes de gestion de produits, de panier d'achat, de paiement sécurisé et de gestion des utilisateurs.</p>
-                <a href="https://github.com/votreprofil/ecommerce" target="_blank"><button>Voir le projet</button></a>
-            </div>
-            
-            <div class="project-card">
-                <img src="assets/images/projet3.jpg" alt="Projet 3">
-                <h3>Analyse des Données avec Python</h3>
-                <p>Un projet de data science qui analyse un jeu de données de ventes pour en extraire des insights commerciaux. Utilisation de Python, Pandas, Matplotlib, et Scikit-learn pour le traitement, la visualisation des données, et la modélisation.</p>
-                <a href="https://github.com/votreprofil/data-analysis" target="_blank"><button>Voir le projet</button></a>
-            </div>
+        </div>
+
+        <div id="admin-form-container">
+            <h3>Ajouter ou Modifier un Projet</h3>
+            <form id="project-form" method="post">
+                <input type="hidden" id="project-id">
+                <input type="text" id="project-title" placeholder="Titre du Projet" required>
+                <textarea id="project-description" placeholder="Description du Projet" required></textarea>
+                <input type="text" id="project-image" placeholder="URL de l'image" required>
+                <input type="url" id="project-link" placeholder="Lien du Projet" required>
+                <button type="submit">Enregistrer le Projet</button>
+            </form>
         </div>
     </section>
 
