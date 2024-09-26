@@ -15,6 +15,7 @@
                 <li><a href="/Project">Projets</a></li>
                 <li><a href="/AboutUs">À propos</a></li>
                 <li><a href="/Contact">Contact</a></li>
+                <li><a href="/Message">{{Login}}</a></li>
                 <li><a href="/Login">Connexion</a></li>
             </ul>
         </nav>
@@ -24,14 +25,7 @@
         <h2>Contactez-moi</h2>
         <p>N'hésitez pas à me contacter pour toute question ou collaboration. Je serais ravi de vous répondre!</p>
         
-        <div class="social-media">
-            <p>Suivez-moi sur les réseaux sociaux :</p>
-            <a href="https://www.linkedin.com" target="_blank"><img src="assets/images/linkedin.png" alt="LinkedIn" class="social-icon"></a>
-            <a href="https://www.twitter.com" target="_blank"><img src="assets/images/twitter.png" alt="Twitter" class="social-icon"></a>
-            <a href="https://www.github.com" target="_blank"><img src="assets/images/github.png" alt="GitHub" class="social-icon"></a>
-        </div>
-
-        <form id="contact-form">
+        <form method="post" action="/Contact">
             <div class="form-group">
                 <label for="name">Nom:</label>
                 <input type="text" id="name" name="name" placeholder="Votre nom" required>
@@ -55,7 +49,5 @@
     <footer>
         <p>&copy; 2024 Mon Portfolio</p>
     </footer>
-
-    <script src="assets/js/Contact.js"></script>
 </body>
 </html>
