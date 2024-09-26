@@ -19,8 +19,9 @@ func main() {
 	r.HandleFunc("/", handlers.HandleHomePage).Methods("GET")
 	r.HandleFunc("/Project", handlers.HandleProjectPage).Methods("GET")
 	r.HandleFunc("/AboutUs", handlers.HandleAboutUsPage).Methods("GET")
-	r.HandleFunc("/Contact", handlers.HandleContactPage).Methods("GET")
+	r.HandleFunc("/Contact", handlers.HandleContactPage).Methods("GET", "POST")
 	r.HandleFunc("/Login", handlers.HandleLoginPage).Methods("GET")
+	r.HandleFunc("/Message", handlers.HandleMessagePage).Methods("GET")
 
 	db, err := handlers.Path()
 	if err != nil {
