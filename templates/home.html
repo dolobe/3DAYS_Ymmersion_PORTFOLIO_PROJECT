@@ -16,7 +16,8 @@
                 <li><a href="/Contact">Contact</a></li>
                 {{if .IsAdmin}}
                 <li><a href="/Message">Message</a></li>
-                <li><a href="/Logout">{{.Username}}</a></li> <!-- Lien de déconnexion -->
+                <li><a href="/Adding">Adding</a></li>
+                <li><a href="/Logout">{{.Username}}</a></li>
                 {{else}}
                 <li><a href="/Login">Login</a></li>
                 {{end}}
@@ -28,7 +29,7 @@
     <section id="home" class="section">
         <h1>Bienvenue sur mon portfolio</h1>
         <p>Développeur Web passionné, prêt à transformer vos idées en réalité numérique.</p>
-        <button onclick="window.location.href = '/Project';">Voir mes projets</button>
+        <button onclick="scrollToSection('projects')">Voir mes projets</button>
     </section>
 
     <section id="projects" class="section">

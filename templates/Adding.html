@@ -17,7 +17,8 @@
                 <li><a href="/Contact">Contact</a></li>
                 {{if .IsAdmin}}
                 <li><a href="/Message">Message</a></li>
-                <li><a href="/Logout">{{.Username}}</a></li> <!-- Lien de déconnexion -->
+                <li><a href="/Adding">Adding</a></li>
+                <li><a href="/Logout">{{.Username}}</a></li>
                 {{else}}
                 <li><a href="/Login">Login</a></li>
                 {{end}}
@@ -27,9 +28,6 @@
 
     <section id="projects" class="section">
         <h2>Mes Projets</h2>
-        <div class="project-container" id="project-list">
-        </div>
-
         <div id="admin-form-container">
             <h3>Ajouter ou Modifier un Projet</h3>
             <form id="project-form" method="post">
@@ -41,6 +39,40 @@
                 <button type="submit">Enregistrer le Projet</button>
             </form>
         </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>Modifier "À propos de moi"</h2>
+        <form action="/Adding" method="post">
+            <label for="content">Contenu :</label>
+            <textarea id="content" name="content" rows="5" required></textarea><br><br>
+
+            <button type="submit">Enregistrer</button>
+        </form>
+    </section>
+
+    <section id="skills" class="section">
+        <h2>Mes Compétences</h2>
+        <div class="skills-container">
+            <form action="/Adding" method="post">
+                <label for="TitleCompetence">Title :</label>
+                <input type="text" id="TitleCompetence" name="TitleCompetence" placeholder="Titre" required><br><br>
+
+                <label for="ContentCompetence">Contenu :</label>
+                <input type="text" id="ContentCompetence" name="ContentCompetence" placeholder="Contenu" required><br><br>
+
+                <button type="submit">Enregistrer le competence</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h3>Ajouter une Nouvelle Expérience</h3>
+        <form id="experience-form" method="post" action="/Adding">
+            <input type="text" name="experienceTitle" placeholder="Titre de l'expérience" required>
+            <textarea name="experienceDescription" placeholder="Description de l'expérience" required></textarea>
+            <button type="submit">Ajouter</button>
+        </form>
     </section>
 
     <footer>
