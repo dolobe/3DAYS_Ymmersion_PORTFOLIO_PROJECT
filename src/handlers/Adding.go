@@ -65,6 +65,22 @@ func HandleAddingPage(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 			return
 		}
+
+		if title := r.FormValue("project-title"); title != "" {
+			description := r.FormValue("project-description")
+			image := r.FormValue("project-image")
+			link := r.FormValue("project-link")
+
+			if err := insertProject(database, title, description, image, link); err != nil {
+				log.Printf("Erreur lors de l'insertion du projet : %s", err)
+				http.Error(w, "Erreur lors de l'insertion du projet", http.StatusInternalServerError)
+				return
+			}
+
+			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
+			return
+		}
+
 	}
 
 	tmpl, err := template.ParseFiles("templates/Adding.html")
@@ -119,5 +135,30 @@ func insertExperience(db *sql.DB, experienceTitle, experienceDescription string)
 		return err
 	}
 
+	return nil
+}
+
+func insertProject(database *sql.DB, title, description, image, link string) error {
+	log.Println("Début de l'insertion du projet")
+	log.Printf("Valeurs à insérer : Titre=%s, Description=%s, Image=%s, Lien=%s", title, description, image, link)
+
+	insertProject := `
+	INSERT INTO projects (title, description, image, link)
+	VALUES (?, ?, ?, ?);`
+
+	result, err := database.Exec(insertProject, title, description, image, link)
+	if err != nil {
+		log.Printf("Erreur lors de l'insertion du projet : %v", err)
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		log.Printf("Erreur lors de la récupération des lignes affectées : %v", err)
+	} else {
+		log.Printf("Nombre de lignes affectées : %d", rowsAffected)
+	}
+
+	log.Println("Insertion du projet terminée")
 	return nil
 }
