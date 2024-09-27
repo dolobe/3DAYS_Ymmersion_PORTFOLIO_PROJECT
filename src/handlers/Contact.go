@@ -3,7 +3,7 @@ package handlers
 import (
 	"database/sql"
 	"fmt"
-	"io/ioutil"
+	"html/template"
 	"log"
 	"net/http"
 )
@@ -17,6 +17,25 @@ func HandleContactPage(w http.ResponseWriter, r *http.Request) {
 	}
 	defer database.Close()
 
+	isAdmin := isAdminAuthenticated(r)
+	var username string
+
+	if isAdmin {
+		// Récupérer le nom d'utilisateur de la base de données
+		cookie, err := r.Cookie("admin_auth")
+		if err == nil {
+			err = database.QueryRow("SELECT username FROM admin WHERE username = ?", cookie.Value).Scan(&username)
+			if err != nil {
+				log.Printf("Erreur lors de la récupération du nom d'utilisateur : %v", err)
+			}
+		}
+	}
+
+	data := PageData{
+		IsAdmin:  isAdmin,
+		Username: username,
+	}
+
 	if r.Method == http.MethodPost {
 		name := r.FormValue("name")
 		email := r.FormValue("email")
@@ -26,22 +45,22 @@ func HandleContactPage(w http.ResponseWriter, r *http.Request) {
 		if err := insertMessage(database, name, email, subject, message); err != nil {
 			log.Printf("Erreur lors de l'insertion du message : %s", err)
 			http.Error(w, "Erreur lors de l'insertion du message", http.StatusInternalServerError)
-			http.Redirect(w, r, "/Message", http.StatusSeeOther)
+			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 			return
 		}
-		http.Redirect(w, r, "/Message", http.StatusSeeOther)
+		http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 
 	}
-	htmlfile, err := ioutil.ReadFile("templates/contacts.html")
+
+	tmpl, err := template.ParseFiles("templates/contacts.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html")
-	_, err = w.Write(htmlfile)
+	err = tmpl.Execute(w, data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError)
 		return
 	}
 }

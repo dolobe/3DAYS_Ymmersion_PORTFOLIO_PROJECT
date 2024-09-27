@@ -1,8 +1,9 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
-	"io/ioutil"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -18,23 +19,80 @@ type Project struct {
 }
 
 func HandleProjectPage(w http.ResponseWriter, r *http.Request) {
-	log.Println("Tentative de chargement de la page des projets...")
-	htmlFile, err := ioutil.ReadFile("templates/Project.html")
+	database, err := Path()
 	if err != nil {
-		log.Printf("Erreur lors de la lecture du fichier HTML : %s", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur de connexion à la base de données", http.StatusInternalServerError)
+		return
+	}
+	defer database.Close()
+
+	isAdmin := isAdminAuthenticated(r)
+	var username string
+
+	if isAdmin {
+		// Récupérer le nom d'utilisateur de la base de données
+		cookie, err := r.Cookie("admin_auth")
+		if err == nil {
+			err = database.QueryRow("SELECT username FROM admin WHERE username = ?", cookie.Value).Scan(&username)
+			if err != nil {
+				log.Printf("Erreur lors de la récupération du nom d'utilisateur : %v", err)
+			}
+		}
+	}
+
+	// Récupérer les projets pour les passer au template
+	projects, err := GetAllProjects(database)
+	if err != nil {
+		http.Error(w, "Erreur lors de la récupération des projets", http.StatusInternalServerError)
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html")
+	data := PageData{
+		IsAdmin:  isAdmin,
+		Username: username,
+		Projects: projects, // Passer les projets au template
+	}
 
-	_, err = w.Write(htmlFile)
+	tmpl, err := template.ParseFiles("templates/Project.html")
 	if err != nil {
-		log.Printf("Erreur lors de l'écriture de la réponse : %s", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
 		return
 	}
+
+	if err := tmpl.Execute(w, data); err != nil {
+		http.Error(w, "Erreur lors de l'exécution du template", http.StatusInternalServerError)
+		return
+	}
+
 	log.Println("Page des projets chargée avec succès.")
+}
+
+func GetAllProjects(db *sql.DB) ([]Project, error) {
+	log.Println("Tentative de récupération de tous les projets...")
+	rows, err := db.Query("SELECT id, title, description, image, link FROM projects")
+	if err != nil {
+		log.Printf("Erreur lors de la récupération des projets : %s", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	var projects []Project
+	for rows.Next() {
+		var project Project
+		if err := rows.Scan(&project.ID, &project.Title, &project.Description, &project.Image, &project.Link); err != nil {
+			log.Printf("Erreur lors du scan des données du projet : %s", err)
+			return nil, err
+		}
+		projects = append(projects, project)
+		log.Printf("Projet récupéré : %+v", project)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Printf("Erreur lors de l'itération sur les lignes : %s", err)
+		return nil, err
+	}
+
+	return projects, nil
 }
 
 func AddProjectHandler(w http.ResponseWriter, r *http.Request) {
@@ -90,27 +148,14 @@ func GetProjectsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT id, title, description, image, link FROM projects")
+	projects, err := GetAllProjects(db)
 	if err != nil {
 		log.Printf("Erreur lors de la récupération des projets : %s", err)
 		http.Error(w, "Erreur lors de la récupération des projets", http.StatusInternalServerError)
 		return
 	}
-	defer rows.Close()
 
-	var projets []Project
-	for rows.Next() {
-		var projet Project
-		if err := rows.Scan(&projet.ID, &projet.Title, &projet.Description, &projet.Image, &projet.Link); err != nil {
-			log.Printf("Erreur lors du scan des données du projet : %s", err)
-			http.Error(w, "Erreur lors de la récupération des projets", http.StatusInternalServerError)
-			return
-		}
-		projets = append(projets, projet)
-		log.Printf("Projet récupéré : %+v", projet)
-	}
-
-	if err := json.NewEncoder(w).Encode(projets); err != nil {
+	if err := json.NewEncoder(w).Encode(projects); err != nil {
 		log.Printf("Erreur lors de l'encodage des projets en JSON : %s", err)
 		http.Error(w, "Erreur lors de l'encodage des projets en JSON", http.StatusInternalServerError)
 		return

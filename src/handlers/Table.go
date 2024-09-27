@@ -24,18 +24,20 @@ func Path() (*sql.DB, error) {
 }
 
 func createTables(db *sql.DB) error {
-	queryUsers := `
-    CREATE TABLE IF NOT EXISTS users (
+	createAdminTable := `
+    CREATE TABLE IF NOT EXISTS admin (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        mail TEXT NOT NULL UNIQUE,
+        username TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
     );`
 
-	if _, err := db.Exec(queryUsers); err != nil {
-		log.Println("Erreur lors de la création de la table utilisateurs:", err)
+	_, err := db.Exec(createAdminTable)
+	if err != nil {
+		log.Fatalf("Erreur lors de la création de la table admin: %v", err)
 		return err
 	}
 
+	// Création de la table projects
 	queryProjects := `
     CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,10 +48,11 @@ func createTables(db *sql.DB) error {
     );`
 
 	if _, err := db.Exec(queryProjects); err != nil {
-		log.Println("Erreur lors de la création de la table projets:", err)
+		log.Println("Erreur lors de la création de la table projects:", err)
 		return err
 	}
 
+	// Création de la table messages
 	createTableSQL := `
 	CREATE TABLE IF NOT EXISTS messages (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,

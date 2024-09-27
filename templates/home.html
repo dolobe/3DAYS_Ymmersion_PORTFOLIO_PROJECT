@@ -14,11 +14,16 @@
                 <li><a href="/Project">Projets</a></li>
                 <li><a href="/AboutUs">À propos</a></li>
                 <li><a href="/Contact">Contact</a></li>
-                <li><a href="/Message">{{Login}}</a></li>
-                <li><a href="/Login">connexion</a></li>
+                {{if .IsAdmin}}
+                <li><a href="/Message">Message</a></li>
+                <li><a href="/Logout">{{.Username}}</a></li> <!-- Lien de déconnexion -->
+                {{else}}
+                <li><a href="/Login">Login</a></li>
+                {{end}}
             </ul>
         </nav>
     </header>
+    
 
     <section id="home" class="section">
         <h1>Bienvenue sur mon portfolio</h1>

@@ -14,9 +14,13 @@
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/Project">Projets</a></li>
                 <li><a href="/AboutUs">À propos</a></li>
-                <li><a href="/contact">Contact</a></li>
-                <li><a href="/Message">{{Login}}</a></li>
-                <li><a href="/Login">{{Login}}</a></li>
+                <li><a href="/Contact">Contact</a></li>
+                {{if .IsAdmin}}
+                <li><a href="/Message">Message</a></li>
+                <li><a href="/Logout">{{.Username}}</a></li> <!-- Lien de déconnexion -->
+                {{else}}
+                <li><a href="/Login">Login</a></li>
+                {{end}}
             </ul>
         </nav>
     </header>
@@ -24,9 +28,9 @@
     <section id="login" class="section">
         <h2>Connexion à votre compte</h2>
         <form method="post" action="/Login">
-            <input type="text" name="mail" placeholder="Email" required>
+            <input type="text" id="username" name="username" placeholder="username" required>
             <input type="password" name="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
+            <button type="submit" href="/">Se connecter</button>
         </form>
         <div id="message" class="message"></div>
     </section>

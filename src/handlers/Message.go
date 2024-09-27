@@ -3,7 +3,6 @@ package handlers
 import (
 	"database/sql"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -24,27 +23,44 @@ func HandleMessagePage(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
+	isAdmin := isAdminAuthenticated(r)
+	var username string
+
+	if isAdmin {
+		cookie, err := r.Cookie("admin_auth")
+		if err == nil {
+			err = db.QueryRow("SELECT username FROM admin WHERE username = ?", cookie.Value).Scan(&username)
+			if err != nil {
+				if err == sql.ErrNoRows {
+					log.Printf("Aucun utilisateur trouvé pour le cookie : %v", cookie.Value)
+				} else {
+					log.Printf("Erreur lors de la récupération du nom d'utilisateur : %v", err)
+				}
+			}
+		}
+	}
+
 	messages, err := GetMessages(db)
 	if err != nil {
 		http.Error(w, "Erreur lors de la récupération des messages", http.StatusInternalServerError)
 		return
 	}
 
-	htmlFile, err := ioutil.ReadFile("templates/Message.html")
+	data := PageData{
+		IsAdmin:  isAdmin,
+		Username: username,
+		Messages: messages,
+	}
+
+	tmpl, err := template.ParseFiles("templates/Message.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors du rendu du template", http.StatusInternalServerError)
 		return
 	}
 
-	tmpl, err := template.New("message").Parse(string(htmlFile))
+	err = tmpl.Execute(w, data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "text/html")
-	if err := tmpl.Execute(w, messages); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Printf("Erreur lors de l'exécution du template : %v", err)
 		return
 	}
 }
