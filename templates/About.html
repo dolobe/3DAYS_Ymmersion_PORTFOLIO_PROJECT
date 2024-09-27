@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/Project.css">
+    <link rel="stylesheet" href="assets/css/Home.css">
+    <title>Mes Projets</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/Project">Projets</a></li>
+                <li><a href="/AboutUs">À propos</a></li>
+                <li><a href="/Contact">Contact</a></li>
+                {{if .IsAdmin}}
+                <li><a href="/Message">Message</a></li>
+                <li><a href="/Logout">{{.Username}}</a></li> <!-- Lien de déconnexion -->
+                {{else}}
+                <li><a href="/Login">Login</a></li>
+                {{end}}
+            </ul>
+        </nav>
+    </header>
+
+    <section id="projects" class="section">
+        <h2>Mes Projets</h2>
+        <div class="project-container" id="project-list">
+        </div>
+
+        <div id="admin-form-container">
+            <h3>Ajouter ou Modifier un Projet</h3>
+            <form id="project-form" method="post">
+                <input type="hidden" id="project-id">
+                <input type="text" id="project-title" placeholder="Titre du Projet" required>
+                <textarea id="project-description" placeholder="Description du Projet" required></textarea>
+                <input type="text" id="project-image" placeholder="URL de l'image" required>
+                <input type="url" id="project-link" placeholder="Lien du Projet" required>
+                <button type="submit">Enregistrer le Projet</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Mon Portfolio</p>
+    </footer>
+
+    <script src="assets/js/Project.js"></script>
+</body>
+</html>
