@@ -7,7 +7,6 @@ import (
 	"net/http"
 )
 
-// Fonction pour gérer la page d'ajout de contenu
 func HandleAddingPage(w http.ResponseWriter, r *http.Request) {
 	database, err := Path()
 	if err != nil {
@@ -35,38 +34,37 @@ func HandleAddingPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
-		content := r.FormValue("content")
-
-		if err := insertAbout(database, content); err != nil {
-			log.Printf("Erreur lors de l'insertion du contenu : %s", err)
-			http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+		if content := r.FormValue("content"); content != "" {
+			if err := insertAbout(database, content); err != nil {
+				log.Printf("Erreur lors de l'insertion du contenu : %s", err)
+				http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+				return
+			}
+			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 			return
 		}
-		http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-	}
 
-	if r.Method == http.MethodPost {
-		TitleCompetence := r.FormValue("TitleCompetence")
-		ContentCompetence := r.FormValue("ContentCompetence")
-
-		if err := insertCompetence(database, TitleCompetence, ContentCompetence); err != nil {
-			log.Printf("Erreur lors de l'insertion du contenu : %s", err)
-			http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+		if TitleCompetence := r.FormValue("TitleCompetence"); TitleCompetence != "" {
+			ContentCompetence := r.FormValue("ContentCompetence")
+			if err := insertCompetence(database, TitleCompetence, ContentCompetence); err != nil {
+				log.Printf("Erreur lors de l'insertion de la compétence : %s", err)
+				http.Error(w, "Erreur lors de l'insertion de la compétence", http.StatusInternalServerError)
+				return
+			}
+			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 			return
 		}
-		http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-	}
 
-	if r.Method == http.MethodPost {
-		experienceTitle := r.FormValue("experienceTitle")
-		experienceDescription := r.FormValue("experienceDescription")
-
-		if err := insertExperience(database, experienceTitle, experienceDescription); err != nil {
-			log.Printf("Erreur lors de l'insertion du contenu : %s", err)
-			http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+		if experienceTitle := r.FormValue("experienceTitle"); experienceTitle != "" {
+			experienceDescription := r.FormValue("experienceDescription")
+			if err := insertExperience(database, experienceTitle, experienceDescription); err != nil {
+				log.Printf("Erreur lors de l'insertion de l'expérience : %s", err)
+				http.Error(w, "Erreur lors de l'insertion de l'expérience", http.StatusInternalServerError)
+				return
+			}
+			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 			return
 		}
-		http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 	}
 
 	tmpl, err := template.ParseFiles("templates/Adding.html")
@@ -103,7 +101,7 @@ func insertCompetence(db *sql.DB, TitleCompetence, ContentCompetence string) err
 
 	_, err := db.Exec(insertCompetence, TitleCompetence, ContentCompetence)
 	if err != nil {
-		log.Printf("Erreur lors de l'insertion du contenu : %v", err)
+		log.Printf("Erreur lors de l'insertion de la compétence : %v", err)
 		return err
 	}
 
@@ -117,7 +115,7 @@ func insertExperience(db *sql.DB, experienceTitle, experienceDescription string)
 
 	_, err := db.Exec(insertExperience, experienceTitle, experienceDescription)
 	if err != nil {
-		log.Printf("Erreur lors de l'insertion du contenu : %v", err)
+		log.Printf("Erreur lors de l'insertion de l'expérience : %v", err)
 		return err
 	}
 
