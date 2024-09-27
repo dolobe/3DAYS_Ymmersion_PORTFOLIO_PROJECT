@@ -23,6 +23,9 @@ func main() {
 	r.HandleFunc("/AboutUs", handlers.HandleAboutUsPage).Methods("GET")
 	r.HandleFunc("/Contact", handlers.HandleContactPage).Methods("GET", "POST")
 	r.HandleFunc("/Message", handlers.HandleMessagePage).Methods("GET")
+	r.HandleFunc("/Adding", handlers.HandleAddingPage).Methods("GET", "POST")
+
+	r.HandleFunc("/Confirmation", handlers.HandleConfirmationPage).Methods("GET")
 
 	r.HandleFunc("/Logout", handlers.HandleLogout).Methods("GET")
 
