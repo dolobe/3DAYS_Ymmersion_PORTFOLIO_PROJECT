@@ -37,6 +37,9 @@ nav ul li a {
     max-width: 900px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
+    background-size: cover;
+    background-blend-mode: multiply;
 }
 
 .about-container {
@@ -71,7 +74,6 @@ nav ul li a {
 }
 
 .skill-card {
-    background-color: #e9ecef;
     padding: 20px;
     margin: 10px;
     border-radius: 10px;
@@ -85,7 +87,9 @@ nav ul li a {
 }
 
 .skill-card p {
-    color: #6c757d;
+    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
+    background-size: cover;
+    background-blend-mode: multiply;
 }
 
 footer {
