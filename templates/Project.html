@@ -26,12 +26,20 @@
         </nav>
     </header>
 
-    <section id="projects" class="section">
+    <section id="projects" class="cont">
         <h2>Mes Projets</h2>
-        <div class="project-container" id="project-list">
+        <div class="projects-container">
+            {{range .Projects}}
+            <div class="project-card">
+                <h2>{{.Title}}</h2><br><br>
+                <img src="{{.Image}}" alt="Image du Projet" class="project-image"><br><br>
+                <p>{{.Description}}</p><br><br>
+                <button href="{{.Link}}" target="_blank">Voir le Projet</button><br><br>
+            </div>
+            {{end}}
         </div>
     </section>
-
+    
     <footer>
         <p>&copy; 2024 Mon Portfolio</p>
     </footer>

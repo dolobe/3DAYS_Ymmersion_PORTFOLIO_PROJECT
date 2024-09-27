@@ -28,25 +28,33 @@
 
     <section id="projects" class="section">
         <h2>Mes Projets</h2>
+        {{if .IsAdmin}}
         <div id="admin-form-container">
             <h3>Ajouter ou Modifier un Projet</h3>
-            <form id="project-form" method="post">
-                <input type="hidden" id="project-id">
-                <input type="text" id="project-title" placeholder="Titre du Projet" required>
-                <textarea id="project-description" placeholder="Description du Projet" required></textarea>
-                <input type="text" id="project-image" placeholder="URL de l'image" required>
-                <input type="url" id="project-link" placeholder="Lien du Projet" required>
+            <form action="/Project" method="post">
+                <label for="project-title">Titre du Projet:</label>
+                <input type="text" id="project-title" name="project-title" placeholder="Titre du Projet" required><br><br>
+                
+                <label for="project-description">Description:</label>
+                <textarea id="project-description" name="project-description" placeholder="Description du Projet" required></textarea><br><br>
+                
+                <label for="project-image">Image:</label>
+                <input type="text" id="project-image" name="project-image" placeholder="URL de l'image" required><br><br>
+                
+                <label for="project-link">Lien:</label>
+                <input type="url" id="project-link" name="project-link" placeholder="Lien du Projet" required><br><br>
+                
                 <button type="submit">Enregistrer le Projet</button>
             </form>
         </div>
+        {{end}}
     </section>
 
     <section id="about" class="section">
         <h2>Modifier "À propos de moi"</h2>
-        <form action="/Adding" method="post">
+        <form action="/Project" method="post">
             <label for="content">Contenu :</label>
             <textarea id="content" name="content" rows="5" required></textarea><br><br>
-
             <button type="submit">Enregistrer</button>
         </form>
     </section>
@@ -54,23 +62,27 @@
     <section id="skills" class="section">
         <h2>Mes Compétences</h2>
         <div class="skills-container">
-            <form action="/Adding" method="post">
-                <label for="TitleCompetence">Title :</label>
+            <form action="/Project" method="post">
+                <label for="TitleCompetence">Titre :</label>
                 <input type="text" id="TitleCompetence" name="TitleCompetence" placeholder="Titre" required><br><br>
 
                 <label for="ContentCompetence">Contenu :</label>
                 <input type="text" id="ContentCompetence" name="ContentCompetence" placeholder="Contenu" required><br><br>
 
-                <button type="submit">Enregistrer le competence</button>
+                <button type="submit">Enregistrer la compétence</button>
             </form>
         </div>
     </section>
 
     <section id="experience" class="section">
         <h3>Ajouter une Nouvelle Expérience</h3>
-        <form id="experience-form" method="post" action="/Adding">
-            <input type="text" name="experienceTitle" placeholder="Titre de l'expérience" required>
-            <textarea name="experienceDescription" placeholder="Description de l'expérience" required></textarea>
+        <form id="experience-form" method="post" action="/Project">
+            <label for="experienceTitle">Titre de l'expérience :</label>
+            <input type="text" id="experienceTitle" name="experienceTitle" placeholder="Titre de l'expérience" required><br><br>
+            
+            <label for="experienceDescription">Description de l'expérience :</label>
+            <textarea id="experienceDescription" name="experienceDescription" placeholder="Description de l'expérience" required></textarea><br><br>
+            
             <button type="submit">Ajouter</button>
         </form>
     </section>
