@@ -67,7 +67,7 @@ func HandleMessagePage(w http.ResponseWriter, r *http.Request) {
 
 func GetMessages(db *sql.DB) ([]Message, error) {
 	log.Println("Tentative de récupération des messages...")
-	rows, err := db.Query("SELECT name, email, subject, message FROM messages")
+	rows, err := db.Query("SELECT name, email, subject, message FROM messages ORDER BY created_at DESC")
 	if err != nil {
 		log.Println("Erreur lors de la récupération des messages:", err)
 		return nil, err

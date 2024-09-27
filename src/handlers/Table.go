@@ -94,7 +94,8 @@ func createTables(db *sql.DB) error {
 		name TEXT NOT NULL,
 		email TEXT NOT NULL,
 		subject TEXT NOT NULL,
-		message TEXT NOT NULL
+		message TEXT NOT NULL,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`
 
 	if _, err := db.Exec(createTableSQL); err != nil {
