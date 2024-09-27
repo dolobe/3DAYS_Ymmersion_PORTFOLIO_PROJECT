@@ -13,13 +13,10 @@ const port = ":8088"
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/projects", handlers.AddProjectHandler).Methods("POST")
-	r.HandleFunc("/api/projects", handlers.GetProjectsHandler).Methods("GET")
-
 	r.HandleFunc("/Login", handlers.HandleLoginPage).Methods("GET", "POST")
 
 	r.HandleFunc("/", handlers.HandleHomePage).Methods("GET")
-	r.HandleFunc("/Project", handlers.HandleProjectPage).Methods("GET")
+	r.HandleFunc("/Project", handlers.HandleProjectPage).Methods("GET", "POST")
 	r.HandleFunc("/AboutUs", handlers.HandleAboutUsPage).Methods("GET")
 	r.HandleFunc("/Contact", handlers.HandleContactPage).Methods("GET", "POST")
 	r.HandleFunc("/Message", handlers.HandleMessagePage).Methods("GET")
