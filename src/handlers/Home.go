@@ -7,10 +7,15 @@ import (
 )
 
 type PageData struct {
-	IsAdmin  bool
-	Username string
-	Messages []Message
-	Projects []Project
+	IsAdmin           bool
+	Username          string
+	Content           string
+	Messages          []Message
+	Projects          []Project
+	CompetenceTitle   string
+	CompetenceContent string
+	Competences       []Competence
+	Experiences       []Experience
 }
 
 // HandleHomePage gère la page d'accueil

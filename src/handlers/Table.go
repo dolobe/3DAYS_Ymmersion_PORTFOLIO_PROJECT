@@ -24,6 +24,30 @@ func Path() (*sql.DB, error) {
 }
 
 func createTables(db *sql.DB) error {
+	createExperienceTable := `
+	CREATE TABLE IF NOT EXISTS experiences (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		experienceTitle TEXT NOT NULL,
+		experienceDescription TEXT NOT NULL
+	);`
+
+	if _, err := db.Exec(createExperienceTable); err != nil {
+		log.Println("Erreur lors de la création de la table experience:", err)
+		return err
+	}
+
+	createCompetenceTable := `
+	CREATE TABLE IF NOT EXISTS competence (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		TitleCompetence TEXT NOT NULL,
+		ContentCompetence TEXT NOT NULL
+	);`
+
+	if _, err := db.Exec(createCompetenceTable); err != nil {
+		log.Println("Erreur lors de la création de la table competence:", err)
+		return err
+	}
+
 	createAdminTable := `
     CREATE TABLE IF NOT EXISTS admin (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,6 +58,17 @@ func createTables(db *sql.DB) error {
 	_, err := db.Exec(createAdminTable)
 	if err != nil {
 		log.Fatalf("Erreur lors de la création de la table admin: %v", err)
+		return err
+	}
+
+	createAboutTable := `
+	CREATE TABLE IF NOT EXISTS about (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		content TEXT NOT NULL
+	);`
+
+	if _, err := db.Exec(createAboutTable); err != nil {
+		log.Println("Erreur lors de la création de la table about:", err)
 		return err
 	}
 
