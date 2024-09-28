@@ -1,4 +1,4 @@
-/* Global Styles */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background: linear-gradient(45deg, #3498db, #8e44ad);
     padding: 10px 0;
     position: sticky;
     top: 0;
@@ -29,36 +29,49 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffd700; /* Couleur dorée */
 }
 
 .section {
     padding: 50px 20px;
     text-align: center;
-    background-color: white;
-    margin: 20px auto;
+    background-color: #fff;
+    margin: 20px auto 30px;
     max-width: 900px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 #home {
-    background-image: url('background.jpg');
+    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
     background-size: cover;
+    background-blend-mode: multiply;
     color: white;
 }
 
 button {
     padding: 10px 20px;
     margin-top: 20px;
-    background-color: #333;
+    background: linear-gradient(45deg, #3498db, #8e44ad);
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: background 0.3s;
 }
 
 button:hover {
-    background-color: #555;
+    background: linear-gradient(45deg, #e74c3c, #f39c12);
 }
 
 .project-container {
@@ -87,7 +100,8 @@ form {
     gap: 10px;
 }
 
-form input, form textarea {
+form input,
+form textarea {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -99,6 +113,7 @@ form button {
     padding: 10px;
     border: none;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 form button:hover {
@@ -108,47 +123,51 @@ form button:hover {
 footer {
     text-align: center;
     padding: 10px 0;
-    background-color: #333;
+    background: linear-gradient(45deg, #8e44ad, #3498db);
     color: white;
     position: sticky;
     bottom: 0;
 }
 
-
-header {
-    background: linear-gradient(45deg, #3498db, #8e44ad);
+h1, h2 {
+    margin: 20px 0;
 }
 
-nav ul li a:hover {
-    color: #ffd700; /* Couleur dorée */
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-#home {
-    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
-    background-size: cover;
-    background-blend-mode: multiply;
+ul li {
+    margin: 5px 0;
 }
 
-.section {
-    background-color: #fff;
-    margin-bottom: 30px;
-    transition: transform 0.3s, box-shadow 0.3s;
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
-.section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+    }
 
-button {
-    background: linear-gradient(45deg, #3498db, #8e44ad);
-}
+    nav ul li {
+        margin: 10px 0;
+    }
 
-button:hover {
-    background: linear-gradient(45deg, #e74c3c, #f39c12);
-}
+    .section {
+        padding: 30px 10px;
+    }
 
-footer {
-    background: linear-gradient(45deg, #8e44ad, #3498db);
-}
+    button {
+        width: 100%;
+        padding: 15px;
+    }
 
+    .project-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}

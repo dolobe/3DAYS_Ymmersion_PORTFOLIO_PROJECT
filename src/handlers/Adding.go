@@ -34,53 +34,64 @@ func HandleAddingPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
-		if content := r.FormValue("content"); content != "" {
-			if err := insertAbout(database, content); err != nil {
-				log.Printf("Erreur lors de l'insertion du contenu : %s", err)
-				http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+		// Vérification de l'insertion de contenu 'À propos de moi'
+		if r.URL.Path == "/Adding" {
+			if content := r.FormValue("content"); content != "" {
+				if err := insertAbout(database, content); err != nil {
+					log.Printf("Erreur lors de l'insertion du contenu : %s", err)
+					http.Error(w, "Erreur lors de l'insertion du contenu", http.StatusInternalServerError)
+					return
+				}
+				http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 				return
 			}
-			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-			return
 		}
 
-		if TitleCompetence := r.FormValue("TitleCompetence"); TitleCompetence != "" {
-			ContentCompetence := r.FormValue("ContentCompetence")
-			if err := insertCompetence(database, TitleCompetence, ContentCompetence); err != nil {
-				log.Printf("Erreur lors de l'insertion de la compétence : %s", err)
-				http.Error(w, "Erreur lors de l'insertion de la compétence", http.StatusInternalServerError)
+		// Vérification de l'insertion de la compétence
+		if r.URL.Path == "/Adding" {
+			if TitleCompetence := r.FormValue("TitleCompetence"); TitleCompetence != "" {
+				ContentCompetence := r.FormValue("ContentCompetence")
+				if err := insertCompetence(database, TitleCompetence, ContentCompetence); err != nil {
+					log.Printf("Erreur lors de l'insertion de la compétence : %s", err)
+					http.Error(w, "Erreur lors de l'insertion de la compétence", http.StatusInternalServerError)
+					return
+				}
+				http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 				return
 			}
-			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-			return
 		}
 
-		if experienceTitle := r.FormValue("experienceTitle"); experienceTitle != "" {
-			experienceDescription := r.FormValue("experienceDescription")
-			if err := insertExperience(database, experienceTitle, experienceDescription); err != nil {
-				log.Printf("Erreur lors de l'insertion de l'expérience : %s", err)
-				http.Error(w, "Erreur lors de l'insertion de l'expérience", http.StatusInternalServerError)
+		// Vérification de l'insertion de l'expérience
+		if r.URL.Path == "/Adding" {
+			if experienceTitle := r.FormValue("experienceTitle"); experienceTitle != "" {
+				experienceDescription := r.FormValue("experienceDescription")
+				if err := insertExperience(database, experienceTitle, experienceDescription); err != nil {
+					log.Printf("Erreur lors de l'insertion de l'expérience : %s", err)
+					http.Error(w, "Erreur lors de l'insertion de l'expérience", http.StatusInternalServerError)
+					return
+				}
+				http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 				return
 			}
-			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-			return
 		}
 
-		if title := r.FormValue("project-title"); title != "" {
-			description := r.FormValue("project-description")
-			image := r.FormValue("project-image")
-			link := r.FormValue("project-link")
+		// Vérification de l'insertion du projet
+		if r.URL.Path == "/Project" {
+			if title := r.FormValue("project-title"); title != "" {
+				description := r.FormValue("project-description")
+				image := r.FormValue("project-image")
+				link := r.FormValue("project-link")
 
-			if err := insertProject(database, title, description, image, link); err != nil {
-				log.Printf("Erreur lors de l'insertion du projet : %s", err)
-				http.Error(w, "Erreur lors de l'insertion du projet", http.StatusInternalServerError)
+				if err := insertProject(database, title, description, image, link); err != nil {
+					log.Printf("Erreur lors de l'insertion du projet : %s", err)
+					http.Error(w, "Erreur lors de l'insertion du projet", http.StatusInternalServerError)
+					return
+				}
+
+				http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
 				return
 			}
-
-			http.Redirect(w, r, "/Confirmation", http.StatusSeeOther)
-			return
 		}
-
 	}
 
 	tmpl, err := template.ParseFiles("templates/Adding.html")

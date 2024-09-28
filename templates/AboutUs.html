@@ -46,11 +46,15 @@
     </section>
 
     <section id="experience" class="section">
-        <ul id="experience-list">
+        <h2>Mes Expérience</h2>
+        <div class="experience-list">
             {{range .Experiences}}
-                <li>{{.ExperienceTitle}} - {{.ExperienceDescription}}</li>
+            <div class="skill-card">
+                <h2>{{.ExperienceTitle}}</h2>
+                <p>{{.ExperienceDescription}}</p>
+            </div>
             {{end}}
-        </ul>
+        </div>
     </section>
 
     <footer>

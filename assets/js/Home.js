@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+
     function addProjectToList(project) {
         const projectList = document.getElementById("projects");
         const projectItem = document.createElement("div");
@@ -103,3 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+function redirectToProjects() {
+    window.location.href = '/Project';
+}

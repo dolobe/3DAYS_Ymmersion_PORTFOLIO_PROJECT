@@ -7,7 +7,6 @@ import (
 	"net/http"
 )
 
-// Structure About pour contenir le contenu
 type About struct {
 	Content string
 }

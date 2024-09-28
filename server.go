@@ -37,9 +37,9 @@ func main() {
 
 	http.Handle("/", r)
 
-	fmt.Println("(http://localhost:8088) - server start on port", port)
-	http.ListenAndServe(":8088", nil)
-	err = http.ListenAndServe(":8088", nil)
+	fmt.Println("(http://localhost:8000) - server start on port", port)
+	http.ListenAndServe(":8000", nil)
+	err = http.ListenAndServe(":8000", nil)
 	if err != nil {
 		fmt.Println("Échec du démarrage du serveur :", err)
 		return

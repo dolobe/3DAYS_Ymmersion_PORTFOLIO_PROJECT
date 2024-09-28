@@ -1,4 +1,4 @@
-/* Styles spécifiques pour la page About */
+
 body {
     background-color: #f8f9fa;
     color: #333;
@@ -37,9 +37,9 @@ nav ul li a {
     max-width: 900px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
+    /* background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
     background-size: cover;
-    background-blend-mode: multiply;
+    background-blend-mode: multiply; */
 }
 
 .about-container {
@@ -80,21 +80,30 @@ nav ul li a {
     width: 250px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
+    background-size: cover;
+    background-blend-mode: multiply;
 }
 
 .skill-card h3 {
     color: #343a40;
 }
 
-.skill-card p {
+/* .skill-card p {
     background: linear-gradient(45deg, #3498db, #2ecc71), url('background.jpg');
     background-size: cover;
     background-blend-mode: multiply;
-}
+}  */
 
 footer {
     text-align: center;
     padding: 10px 0;
     background-color: #343a40;
     color: white;
+}
+
+.experience-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
