@@ -19,7 +19,5 @@ Nous allons collaborer en utilisant **GitHub** pour la gestion du code source, l
 
 
 # 3DAYS_Ymmersion_PORTFOLIO_PROJECT
-# test push matthias
-# test push awa
-# test jennie
-# test michel
+# Lien du projet : 
+https://github.com/mtbinds/3_DAYS_PORTFOLIO_PROJECT.git
